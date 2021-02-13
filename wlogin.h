@@ -29,11 +29,11 @@ public:
 
 private slots:
     void on_actionAbout_triggered();
-
     void on_pushButton_clicked();
 
 private:
     Ui::wlogin *ui;
     authenticate *auth = NULL;
 };
+
 #endif // WLOGIN_H

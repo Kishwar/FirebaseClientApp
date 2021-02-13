@@ -33,13 +33,10 @@ void wlogin::on_actionAbout_triggered()
                                             "and collect data.");
 }
 
-#include "dbfirestore.h"
-
 void wlogin::on_pushButton_clicked()
 {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
-#if 1 //temp turn off login
     auth = new authenticate();
     std::string error;
 
@@ -53,9 +50,4 @@ void wlogin::on_pushButton_clicked()
     } else {
         ui->statusbar->showMessage(error.c_str());
     }
-#else
-    wform *oform = new wform();
-    oform->show();
-    this->hide();
-#endif
 }

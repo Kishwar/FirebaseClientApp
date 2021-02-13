@@ -7,6 +7,7 @@
 //
 
 #include "authenticate.h"
+#include "defines.h"
 
 authenticate::authenticate() {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
@@ -41,15 +42,15 @@ int authenticate::sign_in_sync(std::string email, std::string password, std::str
     //}
 
     if(result.error() == firebase::auth::kAuthErrorNone) {
-        std::cout << "LOG: " << __FUNCTION__  << "SUCCESSFULL SIGNED IN" << std::endl;
-        return 0;
+        std::cout << "LOG: " << __FUNCTION__  << "SUCCESSFULLY SIGNED IN" << std::endl;
+        return FIREBASE_NO_ERROR;
     } else {
         error = result.error_message();
         delete auth;
         delete app;
         app = nullptr;
         auth = nullptr;
-        return 1;
+        return FIREBASE_AUTH_ERROR_NOT_VALID_USER;
     }
 }
 
