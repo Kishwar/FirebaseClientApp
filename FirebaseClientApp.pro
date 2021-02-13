@@ -19,6 +19,7 @@ SOURCES += \
 HEADERS += \
     authenticate.h \
     dbfirestore.h \
+    defines.h \
     wfind.h \
     wform.h \
     wlogin.h
@@ -50,3 +51,6 @@ LIBS += -F$${FIREBASE_SDK}/frameworks/darwin/x86_64 \
         -framework Kerberos                         \
         -framework SystemConfiguration              \
         -L$${FIREBASE_SDK}/libs/darwin/x86_64
+
+RESOURCES += \
+    Resources.qrc

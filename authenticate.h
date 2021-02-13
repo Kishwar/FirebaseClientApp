@@ -9,11 +9,13 @@
 #ifndef AUTHENTICATE_H
 #define AUTHENTICATE_H
 
-#include <string>
 #include "firebase/app.h"
 #include "firebase/auth.h"
-#include <thread>
+
 #include <chrono>
+#include <iostream>
+#include <string>
+#include <thread>
 
 class authenticate
 {

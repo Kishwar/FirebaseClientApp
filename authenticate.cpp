@@ -7,10 +7,9 @@
 //
 
 #include "authenticate.h"
-#include <iostream>
 
 authenticate::authenticate() {
-    std::cout << "LOG: " << __FUNCTION__ << std::endl;
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     AppOp = new firebase::AppOptions();
     AppOp->set_app_id(app_id.c_str());
@@ -20,7 +19,8 @@ authenticate::authenticate() {
 }
 
 authenticate::~authenticate() {
-    std::cout << "LOG: " << __FUNCTION__ << std::endl;
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
     delete AppOp;
     delete auth;
     AppOp = nullptr;
@@ -28,7 +28,7 @@ authenticate::~authenticate() {
 }
 
 int authenticate::sign_in_sync(std::string email, std::string password, std::string &error) {
-    std::cout << "LOG: " << __FUNCTION__ << std::endl;
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     app = firebase::App::Create(*AppOp);
     auth = firebase::auth::Auth::GetAuth(app);
@@ -54,7 +54,7 @@ int authenticate::sign_in_sync(std::string email, std::string password, std::str
 }
 
 void authenticate::sign_out(void) {
-    std::cout << "LOG: " << __FUNCTION__ << std::endl;
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     if(auth != NULL) {
         auth->SignOut();

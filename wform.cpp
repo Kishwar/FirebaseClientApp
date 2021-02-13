@@ -12,3 +12,18 @@ wform::~wform()
 {
     delete ui;
 }
+
+void wform::on_actionNew_triggered()
+{
+
+}
+
+void wform::on_actionSearch_triggered()
+{
+
+}
+
+void wform::on_actionUpdate_triggered()
+{
+
+}
