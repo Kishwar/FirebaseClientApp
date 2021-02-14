@@ -25,12 +25,23 @@ void wform::on_actionNew_triggered() {
     getnextid_async();
 }
 
-void wform::on_actionSearch_triggered()
-{
-
+void wform::on_actionSearch_triggered() {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 }
 
-void wform::on_actionUpdate_triggered()
-{
+void wform::on_actionUpdate_triggered() {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
+    std::map<std::string, std::vector<std::string>> data;
+    std::vector<std::string> vdata;
+
+    vdata.push_back(ui->tfullname->text().toStdString());
+    data["full_name"] = vdata;
+    vdata.clear();
+
+    vdata.push_back(ui->tdate->text().toStdString());
+    data["dob"] = vdata;
+    vdata.clear();
+
+    storedata(ui->tid->text().toStdString(), data);
 }
