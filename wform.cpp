@@ -1,3 +1,11 @@
+//
+// Class: wform (firebase -> firestore)
+//
+// Auther: Kishwar Kumar
+// Date:   13.02.2021
+//
+//
+
 #include "wform.h"
 #include "ui_wform.h"
 
