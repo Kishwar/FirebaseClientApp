@@ -19,7 +19,7 @@ dbfirestore::~dbfirestore() {
 }
 
 
-int dbfirestore::storedata(std::string id, std::map<std::string, std::vector<std::string>> &data) {
+int dbfirestore::storedata_async(std::string id, std::map<std::string, std::vector<std::string>> &data) {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     firebase::firestore::Firestore *db = firebase::firestore::Firestore::GetInstance();
@@ -39,10 +39,13 @@ int dbfirestore::storedata(std::string id, std::map<std::string, std::vector<std
 
     odata.Document(id).Set(firedata).OnCompletion(
         [this](const firebase::Future<void> &future) {
+            std::string e;
             if (future.error() == firebase::firestore::Error::kErrorOk) {
-                this->result("Data stored successfully.");
+                e = "Data stored successfully.";
+                this->result(e);
             } else {
-               this->result("Failed to store data.");
+                e = "Failed to store data.";
+                this->result(e);
             }
     });
 
@@ -70,6 +73,30 @@ void dbfirestore::getnextid_async(void) {
 
                 this->nextid(nextid);
             }
-        });
+    });
+}
+
+void dbfirestore::getSetList_async(void) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
+    firebase::firestore::Firestore *db = firebase::firestore::Firestore::GetInstance();
+    firebase::firestore::DocumentReference doc_ref = db->Collection("music").Document("set");
+
+    doc_ref.Get().OnCompletion(
+        [this](const firebase::Future<firebase::firestore::DocumentSnapshot>& future) {
+            if (future.error() == firebase::firestore::Error::kErrorOk) {
+
+                std::vector<std::string> list;
+                const firebase::firestore::DocumentSnapshot &document = *future.result();
+
+                if (document.exists()) {
+
+                    for(auto &v : document.Get("index").array_value()) {
+                        list.push_back(v.ToString());
+                    }
+                    this->vlist(list);
+                }
+            }
+    });
 }
 

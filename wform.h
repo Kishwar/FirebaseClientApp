@@ -9,6 +9,7 @@
 #ifndef WFORM_H
 #define WFORM_H
 
+#include <QListWidget>
 #include <QMainWindow>
 #include <QMessageBox>
 #include "dbfirestore.h"
@@ -20,12 +21,12 @@ class wform;
 class wform : public QMainWindow, public dbfirestore
 {
     Q_OBJECT
-
 public:
     explicit wform(QWidget *parent = nullptr);
     ~wform();
-    void nextid(std::string id);
-    void result(std::string e);
+    void nextid(std::string &id);
+    void result(std::string &e);
+    void vlist(std::vector<std::string> &lst);
 
 private slots:
     void on_actionNew_triggered();

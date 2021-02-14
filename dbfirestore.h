@@ -21,10 +21,12 @@ class dbfirestore
 public:
     dbfirestore();
     ~dbfirestore();
-    int storedata(std::string id, std::map<std::string, std::vector<std::string>> &data);
+    int storedata_async(std::string id, std::map<std::string, std::vector<std::string>> &data);
     void getnextid_async(void);
-    virtual void nextid(std::string) = 0;
-    virtual void result(std::string) = 0;
+    void getSetList_async(void);
+    virtual void nextid(std::string &) = 0;
+    virtual void result(std::string &) = 0;
+    virtual void vlist(std::vector<std::string> &) = 0;
 };
 
 #endif // DBFIRESTORE_H

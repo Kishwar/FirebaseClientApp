@@ -9,33 +9,47 @@
 #include "wform.h"
 #include "ui_wform.h"
 
-wform::wform(QWidget *parent) : QMainWindow(parent), ui(new Ui::wform)
-{
+wform::wform(QWidget *parent) : QMainWindow(parent), ui(new Ui::wform) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
     ui->setupUi(this);
+    getSetList_async();
 }
 
-wform::~wform()
-{
+wform::~wform() {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
     delete ui;
 }
 
-void wform::nextid(std::string id) {
+void wform::nextid(std::string &id) {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     ui->tid->setText(QString::fromStdString(id));
+}
+
+void wform::result(std::string &e) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
+    ui->statusbar->showMessage(e.c_str());
+    on_actionClear_triggered();
+}
+
+void wform::vlist(std::vector<std::string> &lst) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
+    for(auto &l : lst) {
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(QString::fromStdString(l));
+        item->setCheckState(Qt::Unchecked);
+        ui->setList->addItem(item);
+    }
 }
 
 void wform::on_actionNew_triggered() {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
     getnextid_async();
-}
-
-void wform::result(std::string e) {
-    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
-
-    ui->statusbar->showMessage(e.c_str());
-    on_actionClear_triggered();
 }
 
 void wform::on_actionSearch_triggered() {
@@ -56,7 +70,7 @@ void wform::on_actionUpdate_triggered() {
     data["dob"] = vdata;
     vdata.clear();
 
-    storedata(ui->tid->text().toStdString(), data);
+    storedata_async(ui->tid->text().toStdString(), data);
 }
 
 void wform::on_actionClear_triggered()
