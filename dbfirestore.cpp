@@ -9,7 +9,6 @@
 #include "dbfirestore.h"
 #include "defines.h"
 
-
 dbfirestore::dbfirestore() {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 }
@@ -23,7 +22,7 @@ dbfirestore::~dbfirestore() {
 int dbfirestore::storedata(std::string id, std::map<std::string, std::vector<std::string>> &data) {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 
-    firebase::firestore::Firestore* db = firebase::firestore::Firestore::GetInstance();
+    firebase::firestore::Firestore *db = firebase::firestore::Firestore::GetInstance();
     firebase::firestore::CollectionReference odata = db->Collection("data");
     firebase::firestore::MapFieldValue firedata;
     std::vector<firebase::firestore::FieldValue> load;
@@ -43,6 +42,29 @@ int dbfirestore::storedata(std::string id, std::map<std::string, std::vector<std
     return FIREBASE_NO_ERROR;
 }
 
+void dbfirestore::getnextid_async(void) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
+    firebase::firestore::Firestore *db = firebase::firestore::Firestore::GetInstance();
+
+    db->Collection("data").Get().OnCompletion(
+        [this](const firebase::Future<firebase::firestore::QuerySnapshot>& future) mutable {
+            if (future.error() == firebase::firestore::Error::kErrorOk) {
+                std::string nextid = "a00000000000000000000000000000000";
+                char buf[34];
+                int val = 0;
+
+                nextid = (*--future.result()->documents().cend()).id();
+                val = std::stoi(nextid.substr(1));
+                ++val;
+
+                sprintf(buf, "a%032d", val);
+                nextid = buf;
+
+                this->nextid(nextid);
+            }
+        });
+}
 
 /*
     odata.Document(id).Set({

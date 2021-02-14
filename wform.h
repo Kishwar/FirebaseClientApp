@@ -2,24 +2,24 @@
 #define WFORM_H
 
 #include <QMainWindow>
+#include "dbfirestore.h"
 
 namespace Ui {
 class wform;
 }
 
-class wform : public QMainWindow
+class wform : public QMainWindow, public dbfirestore
 {
     Q_OBJECT
 
 public:
     explicit wform(QWidget *parent = nullptr);
     ~wform();
+    void nextid(std::string id);
 
 private slots:
     void on_actionNew_triggered();
-
     void on_actionSearch_triggered();
-
     void on_actionUpdate_triggered();
 
 private:
