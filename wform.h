@@ -1,7 +1,3 @@
-#ifndef WFORM_H
-#define WFORM_H
-
-#include <QMainWindow>
 //
 // Class: wform (firebase -> firestore)
 //
@@ -10,6 +6,11 @@
 //
 //
 
+#ifndef WFORM_H
+#define WFORM_H
+
+#include <QMainWindow>
+#include <QMessageBox>
 #include "dbfirestore.h"
 
 namespace Ui {
@@ -24,11 +25,13 @@ public:
     explicit wform(QWidget *parent = nullptr);
     ~wform();
     void nextid(std::string id);
+    void result(std::string e);
 
 private slots:
     void on_actionNew_triggered();
     void on_actionSearch_triggered();
     void on_actionUpdate_triggered();
+    void on_actionClear_triggered();
 
 private:
     Ui::wform *ui;

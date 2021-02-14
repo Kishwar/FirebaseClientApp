@@ -10,10 +10,10 @@
 #define WLOGIN_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include "wform.h"
 #include "authenticate.h"
 #include <iostream>
-#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class wlogin; }

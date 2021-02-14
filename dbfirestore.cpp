@@ -37,7 +37,14 @@ int dbfirestore::storedata(std::string id, std::map<std::string, std::vector<std
         load.clear();
     }
 
-    odata.Document(id).Set(firedata);
+    odata.Document(id).Set(firedata).OnCompletion(
+        [this](const firebase::Future<void> &future) {
+            if (future.error() == firebase::firestore::Error::kErrorOk) {
+                this->result("Data stored successfully.");
+            } else {
+               this->result("Failed to store data.");
+            }
+    });
 
     return FIREBASE_NO_ERROR;
 }
@@ -48,7 +55,7 @@ void dbfirestore::getnextid_async(void) {
     firebase::firestore::Firestore *db = firebase::firestore::Firestore::GetInstance();
 
     db->Collection("data").Get().OnCompletion(
-        [this](const firebase::Future<firebase::firestore::QuerySnapshot>& future) mutable {
+        [this](const firebase::Future<firebase::firestore::QuerySnapshot> &future) mutable {
             if (future.error() == firebase::firestore::Error::kErrorOk) {
                 std::string nextid = "a00000000000000000000000000000000";
                 char buf[34];
@@ -66,25 +73,3 @@ void dbfirestore::getnextid_async(void) {
         });
 }
 
-/*
-    odata.Document(id).Set({
-        {"name", firebase::firestore::FieldValue::String("San Francisco")},
-        {"state", firebase::firestore::FieldValue::String("CA")},
-        {"country", firebase::firestore::FieldValue::String("USA")},
-        {"capital", firebase::firestore::FieldValue::Boolean(false)},
-        {"population", firebase::firestore::FieldValue::Integer(860000)},
-        {"regions", firebase::firestore::FieldValue::Array({firebase::firestore::FieldValue::String("west_coast"),
-                                       firebase::firestore::FieldValue::String("norcal")})},
-    });
-
-    std::map<std::string, std::vector<std::string>> pdata;
-    std::vector<std::string> xdata{"100"};
-    std::vector<std::string> ydata{"200"};
-    std::vector<std::string> zdata{"300","400","500"};
-
-    pdata["name"] = xdata;
-    pdata["job"] = ydata;
-    pdata["city"] = zdata;
-
-    storedata("a00003", pdata);
-*/

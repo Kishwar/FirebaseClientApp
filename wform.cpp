@@ -9,9 +9,7 @@
 #include "wform.h"
 #include "ui_wform.h"
 
-wform::wform(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::wform)
+wform::wform(QWidget *parent) : QMainWindow(parent), ui(new Ui::wform)
 {
     ui->setupUi(this);
 }
@@ -33,6 +31,13 @@ void wform::on_actionNew_triggered() {
     getnextid_async();
 }
 
+void wform::result(std::string e) {
+    std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
+
+    ui->statusbar->showMessage(e.c_str());
+    on_actionClear_triggered();
+}
+
 void wform::on_actionSearch_triggered() {
     std::cout << "LOG: " << __FILE_NAME__ << " | " << __LINE__ << " | " << __FUNCTION__ << std::endl;
 }
@@ -52,4 +57,10 @@ void wform::on_actionUpdate_triggered() {
     vdata.clear();
 
     storedata(ui->tid->text().toStdString(), data);
+}
+
+void wform::on_actionClear_triggered()
+{
+    ui->tid->setText("");
+    ui->tfullname->setText("");
 }

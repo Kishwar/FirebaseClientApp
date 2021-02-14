@@ -115,6 +115,8 @@
     <addaction name="actionSearch"/>
     <addaction name="separator"/>
     <addaction name="actionUpdate"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -136,6 +138,11 @@
   <action name="actionUpdate">
    <property name="text">
     <string>Update</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>
